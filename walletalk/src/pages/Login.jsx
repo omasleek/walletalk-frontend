@@ -43,7 +43,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white flex flex-col px-6 py-10 sm:px-12 md:px-24 lg:px-32">
-      <div className="flex justify-center flex-1 mt-24">
+      <div className="flex items-center justify-center min-h-screen bg-[#0f172a] px-6 py-10 sm:px-12 md:px-24 lg:px-32">
         <div className="w-full max-w-xl space-y-8 bg-[#1a2233] p-10 rounded-lg border border-[#38bdf8] shadow-lg">
           <h2 className="text-3xl font-bold text-[#a78bfa]">
             Login to WalleTalk

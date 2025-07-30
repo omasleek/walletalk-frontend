@@ -4,7 +4,7 @@ import { users } from "../data";
 const RoomListSidebar = () => {
   return (
     <div className="bg-[#0f172a] w-64 p-4 border-r border-[#1ea8e6] hidden lg:flex flex-col space-y-4">
-      <h2 className="text-[#a78bfa] text-xl font-bold mb-2">Rooms & Friends</h2>
+      <h2 className="text-[#a78bfa] text-xl font-bold mb-2">Members</h2>
       {users.map((user) => (
         <div
           key={user.id}
