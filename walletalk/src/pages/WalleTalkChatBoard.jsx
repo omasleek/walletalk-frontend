@@ -18,7 +18,7 @@ const WalleTalkChatBoard = () => {
       {/* Main Layout */}
       <div className="flex flex-1">
         <RoomListSidebar />
-        <ChatWindow />
+        <ChatWindow roomId={roomId} />
         <UserProfilePanel />
       </div>
     </div>

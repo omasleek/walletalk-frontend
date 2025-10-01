@@ -1,13 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { userAPI } from "../services/api";
+import { shortenAddress } from "../utils/web3Utils";
 
 const UserProfilePanel = () => {
-  const profile = {
-    name: "Chioma Okeke",
-    role: "Frontend Developer",
-    avatar: "💁‍♀️",
-    location: "Lagos, Nigeria",
-    sharedFiles: ["📄 BugList.pdf", "🎨 DesignMockup.png", "🎵 VoiceNote.mp3"],
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
+      const response = await userAPI.getProfile();
+      setProfile(response.data);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="bg-[#0f172a] w-64 p-4 border-l border-[#1ea8e6] hidden lg:flex flex-col space-y-4">
+        <p className="text-gray-400">Loading profile...</p>
+      </div>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <div className="bg-[#0f172a] w-64 p-4 border-l border-[#1ea8e6] hidden lg:flex flex-col space-y-4">
+        <p className="text-gray-400">No profile data</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#0f172a] w-64 p-4 border-l border-[#1ea8e6] hidden lg:flex flex-col space-y-4">
@@ -15,19 +44,15 @@ const UserProfilePanel = () => {
 
       <div className="bg-[#1a2233] rounded-lg p-3 space-y-2">
         <p className="text-[#38bdf8] font-semibold text-lg">
-          {profile.avatar} {profile.name}
+          {profile.ensName || shortenAddress(profile.address)}
         </p>
-        <p className="text-white text-sm">{profile.role}</p>
-        <p className="text-[#94a3b8] text-xs">{profile.location}</p>
+        <p className="text-white text-sm">Role: {profile.role}</p>
+        <p className="text-[#94a3b8] text-xs">Wallet: {shortenAddress(profile.address)}</p>
       </div>
 
       <div>
-        <h3 className="text-white font-semibold mb-2">Shared Files</h3>
-        <ul className="text-sm space-y-1 text-[#38bdf8]">
-          {profile.sharedFiles.map((file, i) => (
-            <li key={i}>{file}</li>
-          ))}
-        </ul>
+        <h3 className="text-white font-semibold mb-2">Account Info</h3>
+        <p className="text-sm text-[#38bdf8]">Joined: {new Date(profile.createdAt).toLocaleDateString()}</p>
       </div>
     </div>
   );

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import useWallet from "../hooks/useWallet";
+import { shortenAddress } from "../utils/web3Utils";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { account, connected } = useWallet();
 
   const activeLink =
     "bg-yellow-300 text-black px-3 py-2 rounded transition duration-300";
@@ -21,6 +24,14 @@ const Navbar = () => {
             className="w-10 sm:w-12 md:w-20 lg:w-20"
           />
         </div>
+
+        {/* Wallet Display */}
+        {connected && (
+          <div className="hidden md:flex items-center gap-2 text-[#38bdf8] text-sm">
+            <span>🔗</span>
+            <span>{shortenAddress(account)}</span>
+          </div>
+        )}
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-4 font-medium text-base">

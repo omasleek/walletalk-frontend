@@ -12,7 +12,7 @@ const Home = () => {
       {/* Header */}
 
       {/* Hero Section with Image */}
-      <section className="flex flex-col lg:flex-row items-center lg:items-start gap-10 px-20 py-26 max-w-7xl mx-auto">
+      <section className="flex flex-col lg:flex-row items-center lg:items-start gap-10 px-6 md:px-12 lg:px-20 py-16 md:py-20 lg:py-26 max-w-7xl mx-auto">
         {/* BIG Hero Image */}
         <div className="w-full lg:w-3/5">
           <img
@@ -24,10 +24,10 @@ const Home = () => {
 
         {/* Text Content (aligned right) */}
         <div className="w-full lg:w-2/5 text-left space-y-6">
-          <h2 className="text-4xl font-bold text-[#38bdf8]">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#38bdf8]">
             Join a Global Network of Web3 Thinkers, Builders & Explorers 🌍
           </h2>
-          <p className="text-[#94a3b8] text-lg">
+          <p className="text-[#94a3b8] text-base md:text-lg">
             Real-time chat powered by wallets, Web3, and a rich community.
             Whether you're from Metaverse or Universe, you belong here.
           </p>
@@ -50,7 +50,7 @@ const Home = () => {
       </section>
 
       {/* Stats */}
-      <section className="flex justify-evenly gap-6 py-10 px-6 border-y border-[#1ea8e6]">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 py-10 px-6 border-y border-[#1ea8e6]">
         {stats.map((stat, i) => (
           <StatWidget key={i} title={stat.title} value={stat.value} />
         ))}

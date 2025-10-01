@@ -1,11 +1,61 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc"; // Google icon
+import useWallet from "../hooks/useWallet";
+import { shortenAddress } from "../utils/web3Utils";
+import { userAPI } from "../services/api";
 
 const Login = () => {
   const [showUsernameForm, setShowUsernameForm] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [authLoading, setAuthLoading] = useState(false);
+  const { account, connected, connectWallet, signer } = useWallet();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (connected && account && !localStorage.getItem('walletalk_token')) {
+      handleWalletAuth();
+    }
+  }, [connected, account]);
+
+  const handleWalletAuth = async () => {
+    if (!account || !signer) return;
+
+    try {
+      setAuthLoading(true);
+
+      // Request nonce
+      const nonceResponse = await userAPI.requestNonce(account);
+      const { nonce } = nonceResponse.data;
+
+      // Sign the message
+      const message = nonce;
+      const signature = await signer.signMessage(message);
+
+      // Verify signature
+      const verifyResponse = await userAPI.verifySignature({
+        walletAddress: account,
+        signature,
+        nonce,
+      });
+
+      const { token } = verifyResponse.data;
+
+      // Store token and wallet
+      localStorage.setItem('walletalk_token', token);
+      localStorage.setItem('walletalk_wallet', account);
+
+      // Redirect to home
+      navigate('/');
+
+    } catch (error) {
+      console.error('Wallet auth failed:', error);
+      alert('Authentication failed. Please try again.');
+    } finally {
+      setAuthLoading(false);
+    }
+  };
 
   // Google login handler
   const loginWithGoogle = async () => {
@@ -14,23 +64,6 @@ const Login = () => {
       // TODO: Add Firebase or OAuth logic here
     } catch (err) {
       console.error("Google login failed:", err);
-    }
-  };
-
-  // Wallet connection handler
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        console.log("Connected wallet:", accounts[0]);
-        // TODO: store account in global state or session
-      } catch (err) {
-        console.error("User rejected connection:", err);
-      }
-    } else {
-      alert("MetaMask not found. Please install it to continue.");
     }
   };
 
@@ -70,9 +103,18 @@ const Login = () => {
             {/* Wallet Login */}
             <button
               onClick={connectWallet}
-              className="w-full px-4 py-3 border border-[#38bdf8] text-[#38bdf8] rounded hover:bg-[#1a2233] transition"
+              disabled={connected || authLoading}
+              className={`w-full px-4 py-3 border border-[#38bdf8] rounded transition ${
+                connected || authLoading
+                  ? "bg-[#38bdf8] text-white cursor-not-allowed"
+                  : "text-[#38bdf8] hover:bg-[#1a2233]"
+              }`}
             >
-              Login with Wallet Address 💳
+              {authLoading
+                ? "Authenticating..."
+                : connected
+                ? `Connected: ${shortenAddress(account)} ✅`
+                : "Login with Wallet Address 💳"}
             </button>
           </div>
 
