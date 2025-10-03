@@ -14,15 +14,9 @@ const RoomListSidebar = () => {
   }, []);
 
   const fetchRooms = async () => {
-    try {
-      setLoading(true);
-      const response = await chatAPI.getRooms();
-      setRooms(response.data);
-    } catch (error) {
-      console.error("Error fetching rooms:", error);
-    } finally {
-      setLoading(false);
-    }
+    // Always use dummy data for demo
+    setRooms([]);
+    setLoading(false);
   };
 
   const handleCreateRoom = async (e) => {

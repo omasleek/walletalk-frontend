@@ -11,15 +11,14 @@ const UserProfilePanel = () => {
   }, []);
 
   const fetchProfile = async () => {
-    try {
-      setLoading(true);
-      const response = await userAPI.getProfile();
-      setProfile(response.data);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    } finally {
-      setLoading(false);
-    }
+    // Always use dummy profile for demo
+    setProfile({
+      address: localStorage.getItem('walletalk_wallet') || '0xDummy',
+      ensName: 'Demo User',
+      role: 'User',
+      createdAt: new Date().toISOString()
+    });
+    setLoading(false);
   };
 
   if (loading) {

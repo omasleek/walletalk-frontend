@@ -10,6 +10,8 @@ import ChatRoom from "./pages/ChatRoom";
 import AdminDashboard from "./pages/AdminDashboard";
 import CreateRoom from "./pages/CreateRoom";
 import WalleTalkChatBoard from "./pages/WalleTalkChatBoard";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 const App = () => {
   return (
     <Router>
@@ -17,6 +19,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/chat/:roomId" element={<WalleTalkChatBoard />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/create-room" element={<CreateRoom />} />

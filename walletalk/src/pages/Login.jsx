@@ -46,8 +46,8 @@ const Login = () => {
       localStorage.setItem('walletalk_token', token);
       localStorage.setItem('walletalk_wallet', account);
 
-      // Redirect to home
-      navigate('/');
+      // Redirect to dashboard
+      navigate('/dashboard');
 
     } catch (error) {
       console.error('Wallet auth failed:', error);
@@ -61,7 +61,11 @@ const Login = () => {
   const loginWithGoogle = async () => {
     try {
       console.log("Google login triggered");
-      // TODO: Add Firebase or OAuth logic here
+      // Dummy Google login - set fake token
+      const dummyToken = "dummy_google_token_" + Date.now();
+      localStorage.setItem('walletalk_token', dummyToken);
+      localStorage.setItem('walletalk_user', JSON.stringify({ name: "Google User", email: "user@gmail.com" }));
+      navigate('/dashboard');
     } catch (err) {
       console.error("Google login failed:", err);
     }
@@ -70,8 +74,14 @@ const Login = () => {
   // Username login submit (simulated)
   const handleUsernameLogin = (e) => {
     e.preventDefault();
-    console.log("Logging in with:", username, password);
-    // TODO: send to backend for authentication
+    if (username.trim() && password.trim()) {
+      // Dummy login - save credentials and redirect
+      localStorage.setItem('walletalk_token', `username_${Date.now()}`);
+      localStorage.setItem('walletalk_user', JSON.stringify({ username, email: `${username}@example.com` }));
+      navigate('/dashboard');
+    } else {
+      alert('Please enter both username and password');
+    }
   };
 
   return (

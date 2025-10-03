@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import useWallet from "../hooks/useWallet";
 import { shortenAddress } from "../utils/web3Utils";
@@ -7,6 +7,7 @@ import { shortenAddress } from "../utils/web3Utils";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { account, connected } = useWallet();
+  const location = useLocation();
 
   const activeLink =
     "bg-yellow-300 text-black px-3 py-2 rounded transition duration-300";
@@ -14,15 +15,16 @@ const Navbar = () => {
     "text-[#38bdf8] hover:text-white px-3 py-2 transition duration-300";
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-[#0f172a] px-6 py-4 sm:px-8 lg:px-16 shadow-md border-b border-[#1ea8e6]">
-      <div className="flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-[#0f172a]/95 backdrop-blur-md px-6 py-3 sm:px-8 lg:px-16 shadow-lg border-b border-[#38bdf8]/20">
+      <div className="flex items-center justify-between max-w-7xl mx-auto">
+        {/* Logo - Left */}
+        <div className="flex items-center gap-3">
           <img
             src={logo}
             alt="WalleTalk Logo"
-            className="w-10 sm:w-12 md:w-20 lg:w-20"
+            className="w-8 sm:w-10 md:w-12 lg:w-14 h-auto"
           />
+          <span className="text-xl font-bold text-[#38bdf8] hidden sm:block">WalleTalk</span>
         </div>
 
         {/* Wallet Display */}
@@ -34,7 +36,7 @@ const Navbar = () => {
         )}
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-4 font-medium text-base">
+        <ul className="hidden md:flex gap-6 font-medium text-sm">
           <li>
             <NavLink
               to="/"
@@ -47,22 +49,12 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/chat/room123"
+              to="/dashboard"
               className={({ isActive }) =>
                 isActive ? activeLink : defaultLink
               }
             >
-              Chat
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/blog"
-              className={({ isActive }) =>
-                isActive ? activeLink : defaultLink
-              }
-            >
-              Blog
+              Dashboard
             </NavLink>
           </li>
           <li>
@@ -77,22 +69,22 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/login"
+              to="/blog"
               className={({ isActive }) =>
                 isActive ? activeLink : defaultLink
               }
             >
-              Login
+              Blog
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin"
+              to="/profile"
               className={({ isActive }) =>
                 isActive ? activeLink : defaultLink
               }
             >
-              Admin
+              Profile
             </NavLink>
           </li>
         </ul>
@@ -137,7 +129,7 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/pages"
+              to="/chatrooms"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 isActive ? activeLink : defaultLink
@@ -159,13 +151,13 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/admin"
+              to="/profile"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 isActive ? activeLink : defaultLink
               }
             >
-              Admin
+              Profile
             </NavLink>
           </li>
           <li>
