@@ -321,13 +321,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-- **Website**: [https://walletalk.xyz](https://walletalk.xyz)
-- **Twitter**: [@walletalk](https://twitter.com/walletalk)
-- **Discord**: [Join our community](https://discord.gg/walletalk)
-- **Email**: support@walletalk.xyz
 
+- **Twitter**: [@neonsleel](https://x.com/NeonSleek))
+- **Email**: omachilda.dev@gmail.com
 ## Acknowledgments
 
-- Built with ❤️ by the Web3 community
+- Built with ❤️ by omachilda.dev
 - Inspired by the need for decentralized communication
 - Special thanks to all contributors and early adopters
